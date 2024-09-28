@@ -1,68 +1,68 @@
 // src/App.js
-import React, { useState } from 'react'; // Importa React y el useState para gestionar el estado
-import { NavigationContainer } from '@react-navigation/native'; // Importa el contenedor de navegación
-import { createDrawerNavigator } from '@react-navigation/drawer'; // Importa el navegador tipo cajón (drawer)
-import { View, Button, StyleSheet, Text } from 'react-native'; // Importa componentes de React Native
-import GameList from './components/GameList'; // Importa el componente de lista de videojuegos
-import GameForm from './components/GameForm'; // Importa el componente de formulario para agregar o editar juegos
+import React, { useState } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { View, Button, StyleSheet, Text } from 'react-native';
+import GameList from './components/GameList';
+import GameForm from './components/GameForm';
 
-// Crea una instancia del navegador tipo cajón
+// Crea un navegador tipo cajón
 const Drawer = createDrawerNavigator();
 
-// Componente principal de la aplicación
 const App = () => {
-  // Estado para gestionar el juego que se está editando
-  const [editingGame, setEditingGame] = useState(null);
-  // Estado para mostrar u ocultar el formulario
-  const [showForm, setShowForm] = useState(false);
+  // Estado para el juego en edición
+  const [editingGame, setEditingGame] = useState(null); 
+  // Estado para mostrar/ocultar el formulario
+  const [showForm, setShowForm] = useState(false); 
 
-  // Función para manejar la edición de un juego
+  // Maneja la edición de un juego
   const handleEdit = (game) => {
-    setEditingGame(game); // Establece el juego que se va a editar
-    setShowForm(true); // Muestra el formulario
+    setEditingGame(game);
+    setShowForm(true); // Muestra el formulario de edición
   };
 
-  // Función para manejar la acción de guardar cambios
+  // Guarda los cambios y oculta el formulario
   const handleSave = () => {
-    setEditingGame(null); // Restablece el juego en edición
-    setShowForm(false); // Oculta el formulario
+    setEditingGame(null);
+    setShowForm(false);
   };
 
-  // Componente que representa la pantalla de la lista de juegos
+  // Componente de la pantalla de la lista de juegos
   const GameListScreen = () => (
     <View style={styles.container}>
-      {showForm ? ( // Condición para mostrar el formulario o la lista de juegos
+      {showForm ? (
         <GameForm 
-          gameToEdit={editingGame} // Pasa el juego que se va a editar
-          onSave={handleSave} // Función a llamar al guardar
-          onCancel={() => setShowForm(false)} // Función a llamar al cancelar
+          gameToEdit={editingGame} 
+          onSave={handleSave} 
+          onCancel={() => setShowForm(false)} 
         />
       ) : (
         <>
           <Text style={styles.title}>Lista de Videojuegos</Text>
           <Button 
-            title="Agregar Nuevo Juego" // Título del botón
-            onPress={() => setShowForm(true)} // Muestra el formulario al presionar
-            color="#007BFF" // Color del botón
+            title="Agregar Nuevo Juego" 
+            onPress={() => setShowForm(true)} 
+            color="#007BFF" 
           />
-          <GameList onEdit={handleEdit} /> // Muestra la lista de juegos y permite la edición
+          <GameList onEdit={handleEdit} />
         </>
       )}
     </View>
   );
 
-  // Renderiza el contenedor de navegación con el navegador tipo cajón
+  // Configuración de la navegación
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName="Inicio" // Pantalla inicial del navegador
+        initialRouteName="Inicio" 
         screenOptions={{
-          headerTintColor: '#fff', // Color del texto del encabezado
-          headerStyle: { backgroundColor: '#007BFF' }, // Estilo del encabezado
+          // Color del texto en el encabezado
+          headerTintColor: '#fff', 
+          // Estilo del encabezado
+          headerStyle: { backgroundColor: '#007BFF' }, 
         }}
       >
-        <Drawer.Screen name="Inicio" component={GameListScreen} /> // Pantalla principal de la aplicación
-        {/* Puedes agregar más pantallas aquí si es necesario */}
+        <Drawer.Screen name="Inicio" component={GameListScreen} />
       </Drawer.Navigator>
     </NavigationContainer>
   );
@@ -71,18 +71,17 @@ const App = () => {
 // Estilos de la aplicación
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // Utiliza todo el espacio disponible
-    padding: 20, // Espaciado interno
-    backgroundColor: '#f4f4f4', // Color de fondo
+    flex: 1,
+    padding: 20,
+    backgroundColor: '#f4f4f4',
   },
   title: {
-    fontSize: 24, // Tamaño de fuente del título
-    fontWeight: 'bold', // Peso de fuente
-    marginBottom: 20, // Margen inferior
-    textAlign: 'center', // Alineación de texto
-    color: '#333', // Color del texto
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 20,
+    textAlign: 'center',
+    color: '#333',
   },
 });
 
-// Exporta el componente App para su uso en otras partes de la aplicación
-export default App;
+export default App; 
